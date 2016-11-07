@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/troubleType"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="7pt"
+            android:textColor="@color/md_grey_700"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="严重"/>
+
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@color/md_grey_200">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/troubleCountLayout"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/troubleCount"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:textSize="5pt"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/design_critical_point"
+                android:text="20"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
