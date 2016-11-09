@@ -28,14 +28,13 @@ public class TroubleListPresenterImpl implements TroubleListPresenter {
     public void refreshTroubleListData(Integer troubleType) {
         troubleListView.showRefreshLayout();
         int page = 1;
+        troubleListView.setCurrentPage(page);
         troubleListModel.getTroubleListData(troubleType,page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<TroubleDetailBean>>() {
                     @Override
-                    public void onCompleted() {
-                        troubleListView.hideRefreshLayout();
-                    }
+                    public void onCompleted() {}
 
                     @Override
                     public void onError(Throwable e) {
@@ -45,12 +44,15 @@ public class TroubleListPresenterImpl implements TroubleListPresenter {
                     @Override
                     public void onNext(List<TroubleDetailBean> datas) {
                         troubleListView.setData2RecyclerView(datas);
+                        troubleListView.hideRefreshLayout();
                     }
                 });
     }
 
     @Override
-    public void addTroubleListData(int page, Integer troubleType) {
+    public void addTroubleListData(int currentPage, Integer troubleType) {
+        int page = currentPage+1;
+        troubleListView.setCurrentPage(page);
         troubleListModel.getTroubleListData(troubleType,page)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

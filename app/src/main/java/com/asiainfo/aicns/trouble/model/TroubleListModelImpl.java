@@ -1,7 +1,5 @@
 package com.asiainfo.aicns.trouble.model;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.asiainfo.aicns.App;
 import com.asiainfo.aicns.bean.TroubleDetailBean;
@@ -48,7 +46,6 @@ public class TroubleListModelImpl implements TroubleListModel {
                         try {
                             List<TroubleDetailBean> dataList = new ArrayList<TroubleDetailBean>();
                             String json = response.body().string();
-                            Log.d("json", json);
                             JSONObject jo = new JSONObject(json);
                             int code = jo.getInt("code");
                             if(code == 1){
@@ -64,7 +61,6 @@ public class TroubleListModelImpl implements TroubleListModel {
                             }else {
                                 subscriber.onError(new Exception("获取不到数据"));
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                             subscriber.onError(e);

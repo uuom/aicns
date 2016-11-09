@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +30,13 @@ import java.util.List;
 
 public class TroubleListFragment extends Fragment implements TroubleListView{
 
+    private static final String TROUBLE_TYPE_KEY = "com.asiainfo.aicns.trouble.view.TroubleListFragment.trouble_type_key";
     private Integer troubleType;
+
+    private TroubleListPresenter troubleListPresenter;
     private TroubleListAdapter mTroubleListAdapter;
 
     AIRecyclerView mAIRecyclerView;
-
-    private TroubleListPresenter troubleListPresenter;
 
     public static TroubleListFragment newInstance(Integer troubleType){
         TroubleListFragment troubleChartFragment = new TroubleListFragment();
@@ -52,6 +54,7 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
             this.troubleType = (Integer) troubleType;
         }
         EventBus.getDefault().register(this);
+        Log.d("TroubleListFragment", "onCreate-注册");
         troubleListPresenter = new TroubleListPresenterImpl(this);
     }
 
@@ -79,9 +82,7 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
         mAIRecyclerView.setOnScrollBottomListener(new AIRecyclerView.OnScrollBottomListener() {
             @Override
             public void onScrollBottomListener(int currentPage) {
-                int page = ++currentPage;
-                troubleListPresenter.addTroubleListData(page, troubleType);
-                mAIRecyclerView.setCurrentPage(page);
+                troubleListPresenter.addTroubleListData(currentPage, troubleType);
             }
         });
         mAIRecyclerView.setOnRefreshListener(new AIRecyclerView.OnRefreshListener() {
@@ -109,7 +110,6 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
 
     @Override
     public void setData2RecyclerView(List<TroubleDetailBean> datas) {
-        mAIRecyclerView.setCurrentPage(1);
         mTroubleListAdapter.setDataList(datas);
     }
 
@@ -118,15 +118,20 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
         mTroubleListAdapter.addDataList(datas);
     }
 
+    @Override
+    public void setCurrentPage(int page) {
+        mAIRecyclerView.setCurrentPage(page);
+    }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTroubleLevelChangeEvent(TroubleLevelChangeEvent event){
+        this.troubleType = event.troubleLevel;
         troubleListPresenter.refreshTroubleListData(event.troubleLevel);
     }
 }

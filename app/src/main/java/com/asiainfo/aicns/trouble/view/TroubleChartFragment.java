@@ -31,7 +31,6 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
 
     private static final int OBJ_START_LOAD_PAGE = 0;
     private static final int OBJ_PAGE_LOAD_FINISHED = 1;
-    private static final int OBJ_GET_TROUBLE_LIST_FINISHED = 2;
 
     WebView mWebView;
     ContentLoadingProgressBar progress;

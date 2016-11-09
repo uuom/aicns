@@ -15,4 +15,6 @@ public interface TroubleListView {
     void setData2RecyclerView(List<TroubleDetailBean> datas);
 
     void addData2RecyclerView(List<TroubleDetailBean> datas);
+
+    void setCurrentPage(int page);
 }

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.asiainfo.aicns.common.view.NoScrollViewPager;
+import com.asiainfo.aicns.customer.view.CustomerFragment;
+import com.asiainfo.aicns.overview.view.OverviewFragment;
 import com.asiainfo.aicns.trouble.view.TroubleFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         String[] tabTitles = this.getResources().getStringArray(R.array.tab_title);
         Fragment[] fragments  = new Fragment[]{new TroubleFragment()
-                , new TroubleFragment(),new TroubleFragment()};
+                , new OverviewFragment(),new CustomerFragment()};
         ViewPageAdapter adapter = new ViewPageAdapter(this.getSupportFragmentManager(), tabTitles, fragments);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
