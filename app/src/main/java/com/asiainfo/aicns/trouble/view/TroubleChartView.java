@@ -8,4 +8,6 @@ public interface TroubleChartView {
     void hideProgress();
 
     void setData2WebView(String jsonData);
+
+    void showProgress();
 }

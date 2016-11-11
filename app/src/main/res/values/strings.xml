@@ -17,8 +17,6 @@
         <item>客户监控</item>
     </array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_more_data">已加载全部数据</string>
     <string name="no_data">暂无数据</string>
 </resources>

@@ -25,14 +25,14 @@ import rx.Subscriber;
 public class TroubleListModelImpl implements TroubleListModel {
 
     @Override
-    public Observable<List<TroubleDetailBean>> getTroubleListData(final Integer troubleType, final int page) {
+    public Observable<List<TroubleDetailBean>> getTroubleListData(final Integer troubleLevel, final int page) {
 
         return Observable.create(new Observable.OnSubscribe<List<TroubleDetailBean>>() {
             @Override
             public void call(final Subscriber<? super List<TroubleDetailBean>> subscriber) {
                 String url = Api.REQUEST_BASE_URL + Api.GET_TROUBLE_DETAIL_LIST_URL + "&page="+page;
-                if (troubleType != null){
-                    url += "&faultType="+troubleType;
+                if (troubleLevel != null){
+                    url += "&faultType="+troubleLevel;
                 }
                 App.getOkHttpUtil().get(url, new Callback() {
                     @Override

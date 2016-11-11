@@ -2,8 +2,6 @@ package com.asiainfo.aicns;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,17 +35,6 @@ public class FirstActivity extends AppCompatActivity {
 
         App.addActivity(this);
 
-        //check update
-        PackageManager manager = this.getPackageManager();
-        PackageInfo info = null;
-        try {
-            info = manager.getPackageInfo(this.getPackageName(), 0);
-            int version = info.versionCode;
-            checkVersion(version);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
         //check login
         SharedPreferences spf = getSharedPreferences(Constant.SHARED_PREFERENCES_KEY, MODE_PRIVATE);
         final String oldUsername = spf.getString(Constant.SHARED_PREFERENCES_NAME_USERNAME, null);
@@ -58,7 +45,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(1000);
 
                     Message msg = new Message();
                     msg.what = OBJ_WAIT;
@@ -71,11 +58,6 @@ public class FirstActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void checkVersion(int version) {
-        String url = Api.REQUEST_BASE_URL + Api.CHECK_APP_UPDATE_URL;
-
-    }
-
     private void login(final String username, final String password){
         final String url = Api.REQUEST_BASE_URL + Api.LOGIN_URL;
         App.getOkHttpUtil().get(url + "&user="+username+"&passwd="+password, new Callback() {
@@ -83,7 +65,7 @@ public class FirstActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Message msg = new Message();
                 msg.what = OBJ_SHOW_LOGIN_MESSAGE;
-                msg.obj = "服务器忙";
+                msg.obj = "登录失败，服务器忙";
                 handler.sendMessage(msg);
             }
 

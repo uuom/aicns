@@ -36,14 +36,15 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
     ContentLoadingProgressBar progress;
 
 
-    private Integer troubleType;
+    private Integer troubleLevel;
+    private boolean initFinished = false;
 
     private TroubleChartPresenter troubleChartPresenter;
 
-    public static TroubleChartFragment newInstance(Integer troubleType){
+    public static TroubleChartFragment newInstance(Integer troubleLevel){
         TroubleChartFragment troubleChartFragment = new TroubleChartFragment();
         Bundle args = new Bundle();
-        args.putSerializable("troubleType", troubleType);
+        args.putSerializable("troubleLevel", troubleLevel);
         troubleChartFragment.setArguments(args);
         return troubleChartFragment;
     }
@@ -51,9 +52,9 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializable troubleType = this.getArguments().getSerializable("troubleType");
-        if (troubleType != null){
-            this.troubleType = (Integer) troubleType;
+        Serializable troubleLevel = this.getArguments().getSerializable("troubleLevel");
+        if (troubleLevel != null){
+            this.troubleLevel = (Integer) troubleLevel;
         }
         EventBus.getDefault().register(this);
         troubleChartPresenter = new TroubleChartPresenterImpl(this);
@@ -69,6 +70,9 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
 
         setWebView();
         mWebView.loadUrl("file:///android_asset/troubleChart.html");
+        while (initFinished){
+            troubleChartPresenter.refreshChart(troubleLevel);
+        }
 
         return view;
     }
@@ -94,9 +98,11 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
             @Override
             public void onPageFinished(WebView webView, String url) {
                 super.onPageFinished(webView, url);
-                if (!mWebView.getSettings().getLoadsImagesAutomatically()) {
-                    mWebView.getSettings().setLoadsImagesAutomatically(true);
+
+                if (url.contains("troubleChart.html")){
+                    initFinished = true;    //加载页面完成
                 }
+
                 Message msg = new Message();
                 msg.what = OBJ_PAGE_LOAD_FINISHED;
                 handler.sendMessage(msg);
@@ -116,9 +122,6 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
                     progress.setVisibility(View.VISIBLE);
                     break;
                 case OBJ_PAGE_LOAD_FINISHED:
-
-                    troubleChartPresenter.initChart(troubleType); //html页面加载完成后在调用js方法
-
                     mWebView.setVisibility(View.VISIBLE);
                     progress.setVisibility(View.GONE);
                     break;
@@ -147,6 +150,12 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
     }
 
     @Override
+    public void showProgress() {
+        mWebView.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
@@ -155,6 +164,7 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
     //event
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTroubleLevelChangeEvent(TroubleLevelChangeEvent event){
-        troubleChartPresenter.initChart(event.troubleLevel);
+        this.troubleLevel = event.troubleLevel;
+        troubleChartPresenter.refreshChart(event.troubleLevel);
     }
 }

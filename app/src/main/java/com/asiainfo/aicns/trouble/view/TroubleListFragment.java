@@ -31,17 +31,17 @@ import java.util.List;
 public class TroubleListFragment extends Fragment implements TroubleListView{
 
     private static final String TROUBLE_TYPE_KEY = "com.asiainfo.aicns.trouble.view.TroubleListFragment.trouble_type_key";
-    private Integer troubleType;
+    private Integer troubleLevel;
 
     private TroubleListPresenter troubleListPresenter;
     private TroubleListAdapter mTroubleListAdapter;
 
     AIRecyclerView mAIRecyclerView;
 
-    public static TroubleListFragment newInstance(Integer troubleType){
+    public static TroubleListFragment newInstance(Integer troubleLevel){
         TroubleListFragment troubleChartFragment = new TroubleListFragment();
         Bundle args = new Bundle();
-        args.putSerializable("troubleType", troubleType);
+        args.putSerializable("troubleLevel", troubleLevel);
         troubleChartFragment.setArguments(args);
         return troubleChartFragment;
     }
@@ -49,9 +49,9 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializable troubleType = this.getArguments().getSerializable("troubleType");
-        if (troubleType != null){
-            this.troubleType = (Integer) troubleType;
+        Serializable troubleLevel = this.getArguments().getSerializable("troubleLevel");
+        if (troubleLevel != null){
+            this.troubleLevel = (Integer) troubleLevel;
         }
         EventBus.getDefault().register(this);
         Log.d("TroubleListFragment", "onCreate-注册");
@@ -82,17 +82,17 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
         mAIRecyclerView.setOnScrollBottomListener(new AIRecyclerView.OnScrollBottomListener() {
             @Override
             public void onScrollBottomListener(int currentPage) {
-                troubleListPresenter.addTroubleListData(currentPage, troubleType);
+                troubleListPresenter.addTroubleListData(currentPage, troubleLevel);
             }
         });
         mAIRecyclerView.setOnRefreshListener(new AIRecyclerView.OnRefreshListener() {
             @Override
             public void onRefreshHelper(SwipeRefreshLayout refreshLayout) {
-                troubleListPresenter.refreshTroubleListData(troubleType);
+                troubleListPresenter.refreshTroubleListData(troubleLevel);
             }
         });
 
-        troubleListPresenter.refreshTroubleListData(troubleType);
+        troubleListPresenter.refreshTroubleListData(troubleLevel);
 
         return view;
     }
@@ -131,7 +131,7 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTroubleLevelChangeEvent(TroubleLevelChangeEvent event){
-        this.troubleType = event.troubleLevel;
+        this.troubleLevel = event.troubleLevel;
         troubleListPresenter.refreshTroubleListData(event.troubleLevel);
     }
 }

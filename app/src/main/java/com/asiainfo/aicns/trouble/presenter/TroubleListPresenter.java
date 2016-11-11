@@ -7,14 +7,14 @@ public interface TroubleListPresenter {
 
     /**
      * 刷新故障列表
-     * @param troubleType
+     * @param troubleLevel
      */
-    void refreshTroubleListData(Integer troubleType);
+    void refreshTroubleListData(Integer troubleLevel);
 
     /**
      * 故障列表加载更多数据
      * @param i
-     * @param troubleType
+     * @param troubleLevel
      */
-    void addTroubleListData(int i, Integer troubleType);
+    void addTroubleListData(int i, Integer troubleLevel);
 }

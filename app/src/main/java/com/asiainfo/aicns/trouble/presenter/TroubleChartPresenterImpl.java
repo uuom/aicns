@@ -1,11 +1,8 @@
 package com.asiainfo.aicns.trouble.presenter;
 
-import com.asiainfo.aicns.bean.ProvinceTrouble;
 import com.asiainfo.aicns.trouble.model.TroubleChartModel;
 import com.asiainfo.aicns.trouble.model.TroubleChartModelImpl;
 import com.asiainfo.aicns.trouble.view.TroubleChartView;
-
-import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,36 +22,23 @@ public class TroubleChartPresenterImpl implements TroubleChartPresenter {
     }
 
     @Override
-    public void initChart(Integer troubleType) {
-        troubleChartModel.getProvinceTroubleData(troubleType)
+    public void refreshChart(Integer troubleLevel) {
+        troubleChartView.showProgress();
+        troubleChartModel.getProvinceTroubleData(troubleLevel)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<ProvinceTrouble>>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                         troubleChartView.hideProgress();
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
-                    }
+                    public void onError(Throwable e) {}
 
                     @Override
-                    public void onNext(List<ProvinceTrouble> provinceTroubles) {
-
-                        String data = "[{\"name\": \"北京\",\"value\": 18}," +
-                                "{\"name\": \"河北\",\"value\": 11}," +
-                                "{\"name\": \"河南\",\"value\": 12}," +
-                                "{\"name\": \"内蒙古\",\"value\": 15}," +
-                                "{\"name\": \"黑龙江\",\"value\": 11}," +
-                                "{\"name\": \"贵州\",\"value\": 10}," +
-                                "{\"name\": \"新疆\",\"value\": 2}," +
-                                "{\"name\": \"西藏\",\"value\": 15}," +
-                                "{\"name\": \"陕西\",\"value\": 20}," +
-                                "{\"name\": \"香港\",\"value\": 4}]";
-
-                        troubleChartView.setData2WebView(data);
+                    public void onNext(String jsonData) {
+                        troubleChartView.setData2WebView(jsonData);
                     }
                 });
     }

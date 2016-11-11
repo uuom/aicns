@@ -1,10 +1,15 @@
 package com.asiainfo.aicns.trouble.model;
 
-import com.asiainfo.aicns.bean.ProvinceTrouble;
+import com.asiainfo.aicns.App;
+import com.asiainfo.aicns.common.api.Api;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -15,15 +20,34 @@ public class TroubleChartModelImpl implements TroubleChartModel {
 
 
     @Override
-    public Observable<List<ProvinceTrouble>> getProvinceTroubleData(Integer troubleType) {
-        return Observable.create(new Observable.OnSubscribe<List<ProvinceTrouble>>() {
+    public Observable<String> getProvinceTroubleData(final Integer troubleLevel) {
+        return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
-            public void call(Subscriber<? super List<ProvinceTrouble>> subscriber) {
+            public void call(final Subscriber<? super String> subscriber) {
 
-                //
-                List<ProvinceTrouble> dataList = new ArrayList<ProvinceTrouble>();
-                subscriber.onNext(dataList);
-                subscriber.onCompleted();
+                String url = Api.REQUEST_BASE_URL + Api.GET_TROUBLE_CHART_DATA_URL + "&troubleLevel="+troubleLevel;
+                App.getOkHttpUtil().get(url, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        subscriber.onError(e);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        try {
+                            String json = response.body().string();
+                            JSONObject jo = new JSONObject(json);
+                            int code = jo.getInt("code");
+                            if (code == 1){
+                                String data = jo.getJSONArray("data").toString();
+                                subscriber.onNext(data);
+                                subscriber.onCompleted();
+                            }
+                        } catch (Exception e) {
+                            subscriber.onError(e);
+                        }
+                    }
+                });
             }
         });
     }
