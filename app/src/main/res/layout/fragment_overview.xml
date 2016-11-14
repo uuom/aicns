@@ -1,13 +1,254 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.asiainfo.aicns.overview.view.OverviewFragment">
+    xmlns:stv="http://schemas.android.com/tools"
+    android:orientation="horizontal">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_white"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <com.asiainfo.aicns.common.view.UsageRateProgress
+            android:id="@+id/urp1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            app:progressName="链路"
+            app:openAnimotion="true" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:showDividers="middle">
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:sCenterTextString="链路概况"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="链路总数"
+                app:sRightTextString="5182"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="故障链路总数"
+                app:sRightTextString="83"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="北京"
+                app:sRightTextString="20"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="天津"
+                app:sRightTextString="15"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="贵州"
+                app:sRightTextString="8"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="河北"
+                app:sRightTextString="2"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_grey_500"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_white"
+        android:orientation="vertical">
+
+        <com.asiainfo.aicns.common.view.UsageRateProgress
+            android:id="@+id/urp2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            app:progressName="设备"
+            app:openAnimotion="true" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:showDividers="middle">
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:sCenterTextString="设备概况"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="设备总数"
+                app:sRightTextString="100"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="故障设备总数"
+                app:sRightTextString="32"
+                app:sRightTextColor="@color/md_red_500"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="北京"
+                app:sRightTextString="20"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="天津"
+                app:sRightTextString="12"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_grey_500"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@color/md_white"
+        android:orientation="vertical">
+
+        <com.asiainfo.aicns.common.view.UsageRateProgress
+            android:id="@+id/urp3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            app:progressName="计费"
+            app:openAnimotion="true" />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:showDividers="middle">
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                app:sCenterTextString="计费端口概述"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="端口总数"
+                app:sRightTextString="140"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="故障端口总数"
+                app:sRightTextString="4"
+                app:sRightTextColor="@color/md_red_500"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="天津"
+                app:sRightTextString="2"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="贵州"
+                app:sRightTextString="1"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+
+            <com.allen.library.SuperTextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:sLeftTextString="河北"
+                app:sRightTextString="1"
+                app:sRightTextColor="@color/md_red_500"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                stv:sLineShow="bottom" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

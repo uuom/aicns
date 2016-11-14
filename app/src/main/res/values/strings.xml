@@ -12,8 +12,8 @@
     <string name="action_setting">系统设置</string>
 
     <array name="tab_title">
-        <item>告警监控</item>
         <item>概况监控</item>
+        <item>告警监控</item>
         <item>客户监控</item>
     </array>
 

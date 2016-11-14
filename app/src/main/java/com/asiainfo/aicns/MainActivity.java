@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         String[] tabTitles = this.getResources().getStringArray(R.array.tab_title);
-        Fragment[] fragments  = new Fragment[]{new TroubleFragment(),new OverviewFragment(),new CustomerFragment()};
+        Fragment[] fragments  = new Fragment[]{new OverviewFragment(),new TroubleFragment(),new CustomerFragment()};
         ViewPageAdapter adapter = new ViewPageAdapter(this.getSupportFragmentManager(), tabTitles, fragments);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
