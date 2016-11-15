@@ -8,8 +8,8 @@ android {
         applicationId "com.asiainfo.aicns"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 2016111001
-        versionName "0.3.2"
+        versionCode 2016111501
+        versionName "0.3.3"
     }
     buildTypes {
         release {
@@ -40,4 +40,5 @@ dependencies{
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.5.0'
 
     compile 'com.github.lygttpod:SuperTextView:1.0.4'
+    compile 'com.github.dongjunkun:DropDownMenu:1.0.3'
 }

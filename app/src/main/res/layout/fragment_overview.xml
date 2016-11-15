@@ -200,7 +200,7 @@
             <com.allen.library.SuperTextView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                app:sCenterTextString="计费端口概述"
+                app:sCenterTextString="计费端口概况"
                 stv:sLineShow="bottom" />
 
             <com.allen.library.SuperTextView

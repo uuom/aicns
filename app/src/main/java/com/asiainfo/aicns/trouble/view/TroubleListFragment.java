@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.asiainfo.aicns.R;
 import com.asiainfo.aicns.bean.TroubleDetailBean;
@@ -28,7 +29,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class TroubleListFragment extends Fragment implements TroubleListView{
+public class TroubleListFragment extends Fragment implements TroubleListView, View.OnClickListener {
 
     private static final String TROUBLE_TYPE_KEY = "com.asiainfo.aicns.trouble.view.TroubleListFragment.trouble_type_key";
     private Integer troubleLevel;
@@ -37,6 +38,8 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
     private TroubleListAdapter mTroubleListAdapter;
 
     AIRecyclerView mAIRecyclerView;
+    LinearLayout troubleLevelSort;
+    LinearLayout troubleTimeSort;
 
     public static TroubleListFragment newInstance(Integer troubleLevel){
         TroubleListFragment troubleChartFragment = new TroubleListFragment();
@@ -65,6 +68,9 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
         View view = inflater.inflate(R.layout.fragment_trouble_list, container, false);
 
         mAIRecyclerView = (AIRecyclerView) view.findViewById(R.id.troubleList);
+        troubleLevelSort = (LinearLayout) view.findViewById(R.id.troubleLevelSort);
+        troubleTimeSort = (LinearLayout) view.findViewById(R.id.troubleTimeSort);
+
         mTroubleListAdapter = new TroubleListAdapter(this.getActivity());
         mTroubleListAdapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +99,8 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
         });
 
         troubleListPresenter.refreshTroubleListData(troubleLevel);
+        troubleLevelSort.setOnClickListener(this);
+        troubleTimeSort.setOnClickListener(this);
 
         return view;
     }
@@ -133,5 +141,17 @@ public class TroubleListFragment extends Fragment implements TroubleListView{
     public void onTroubleLevelChangeEvent(TroubleLevelChangeEvent event){
         this.troubleLevel = event.troubleLevel;
         troubleListPresenter.refreshTroubleListData(event.troubleLevel);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.troubleLevelSort:
+                //TODO 按故障级别排序
+                break;
+            case R.id.troubleTimeSort:
+                //TODO 按故障发生时间排序
+                break;
+        }
     }
 }
