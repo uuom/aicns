@@ -1,254 +1,196 @@
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    xmlns:stv="http://schemas.android.com/tools"
-    android:orientation="horizontal">
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:stv="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@color/md_white"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
-        <com.asiainfo.aicns.common.view.UsageRateProgress
-            android:id="@+id/urp1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            app:progressName="链路"
-            app:openAnimotion="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_white"
+                android:orientation="vertical">
+
+                <com.asiainfo.aicns.common.view.UsageRateProgress
+                    android:id="@+id/urp1"
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    app:progressName="链路"
+                    app:openAnimotion="true" />
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:showDividers="middle">
+
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:sCenterTextString="链路概况"
+                        stv:sLineShow="bottom" />
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_allLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="链路总数"
+                        app:sRightTextString="5182"
+                        android:clickable="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        stv:sLineShow="bottom" />
+
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_abnormalLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="故障链路总数"
+                        app:sRightTextString="83"
+                        app:sRightTextColor="@color/md_red_500"
+                        android:clickable="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        stv:sLineShow="bottom" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/md_grey_500"/>
+
+        <ScrollView
             android:layout_weight="1"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:showDividers="middle">
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
-            <com.allen.library.SuperTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:sCenterTextString="链路概况"
-                stv:sLineShow="bottom" />
+                android:layout_height="match_parent"
+                android:background="@color/md_white"
+                android:orientation="vertical">
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="链路总数"
-                app:sRightTextString="5182"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
+                <com.asiainfo.aicns.common.view.UsageRateProgress
+                    android:id="@+id/urp2"
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    app:progressName="设备"
+                    app:openAnimotion="true" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="故障链路总数"
-                app:sRightTextString="83"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:showDividers="middle">
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="北京"
-                app:sRightTextString="20"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:sCenterTextString="设备概况"
+                        stv:sLineShow="bottom" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="天津"
-                app:sRightTextString="15"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_allDev"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="设备总数"
+                        app:sRightTextString="100"
+                        stv:sLineShow="bottom" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="贵州"
-                app:sRightTextString="8"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="河北"
-                app:sRightTextString="2"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/md_grey_500"/>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@color/md_white"
-        android:orientation="vertical">
-
-        <com.asiainfo.aicns.common.view.UsageRateProgress
-            android:id="@+id/urp2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            app:progressName="设备"
-            app:openAnimotion="true" />
+                    <com.allen.library.SuperTextView
+                        android:id="@+id/st_abnormalDev"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="故障设备总数"
+                        app:sRightTextString="32"
+                        app:sRightTextColor="@color/md_red_500"
+                        stv:sLineShow="bottom" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/md_grey_500"/>
+
+        <ScrollView
             android:layout_weight="1"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:showDividers="middle">
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
-            <com.allen.library.SuperTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:sCenterTextString="设备概况"
-                stv:sLineShow="bottom" />
+                android:layout_height="match_parent"
+                android:background="@color/md_white"
+                android:orientation="vertical">
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="设备总数"
-                app:sRightTextString="100"
-                stv:sLineShow="bottom" />
+                <com.asiainfo.aicns.common.view.UsageRateProgress
+                    android:id="@+id/urp3"
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    app:progressName="计费"
+                    app:openAnimotion="true" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="故障设备总数"
-                app:sRightTextString="32"
-                app:sRightTextColor="@color/md_red_500"
-                stv:sLineShow="bottom" />
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:showDividers="middle">
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="北京"
-                app:sRightTextString="20"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:sCenterTextString="计费端口概况"
+                        stv:sLineShow="bottom" />
 
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="天津"
-                app:sRightTextString="12"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-        </LinearLayout>
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="端口总数"
+                        app:sRightTextString="140"
+                        stv:sLineShow="bottom" />
+
+                    <com.allen.library.SuperTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:sLeftTextString="故障端口总数"
+                        app:sRightTextString="4"
+                        app:sRightTextColor="@color/md_red_500"
+                        stv:sLineShow="bottom" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/md_grey_500"/>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:background="@color/md_white"
-        android:orientation="vertical">
-
-        <com.asiainfo.aicns.common.view.UsageRateProgress
-            android:id="@+id/urp3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            app:progressName="计费"
-            app:openAnimotion="true" />
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:showDividers="middle">
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                app:sCenterTextString="计费端口概况"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="端口总数"
-                app:sRightTextString="140"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="故障端口总数"
-                app:sRightTextString="4"
-                app:sRightTextColor="@color/md_red_500"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="天津"
-                app:sRightTextString="2"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="贵州"
-                app:sRightTextString="1"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-
-            <com.allen.library.SuperTextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:sLeftTextString="河北"
-                app:sRightTextString="1"
-                app:sRightTextColor="@color/md_red_500"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
-                stv:sLineShow="bottom" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="26dp"
+        android:src="@drawable/ic_refresh"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

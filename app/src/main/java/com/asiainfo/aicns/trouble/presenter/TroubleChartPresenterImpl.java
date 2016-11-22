@@ -1,5 +1,7 @@
 package com.asiainfo.aicns.trouble.presenter;
 
+import android.util.Log;
+
 import com.asiainfo.aicns.trouble.model.TroubleChartModel;
 import com.asiainfo.aicns.trouble.model.TroubleChartModelImpl;
 import com.asiainfo.aicns.trouble.view.TroubleChartView;
@@ -26,11 +28,11 @@ public class TroubleChartPresenterImpl implements TroubleChartPresenter {
         troubleChartView.showProgress();
         troubleChartModel.getProvinceTroubleData(troubleLevel)
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.newThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        troubleChartView.hideProgress();
+//                        troubleChartView.hideProgress();
                     }
 
                     @Override

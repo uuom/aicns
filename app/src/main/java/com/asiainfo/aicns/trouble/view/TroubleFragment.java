@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.asiainfo.aicns.R;
 import com.asiainfo.aicns.bean.TroubleBean;
+import com.asiainfo.aicns.customer.view.CustomerFragment;
 import com.asiainfo.aicns.trouble.event.TroubleLevelChangeEvent;
 import com.asiainfo.aicns.trouble.presenter.TroublePresenter;
 import com.asiainfo.aicns.trouble.presenter.TroublePresenterImpl;

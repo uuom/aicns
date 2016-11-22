@@ -1,13 +1,131 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/yangxp5/Desktop/effectScatter-map.html -->
+<html style="height: 100%">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
-<body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main"></div>
-</body>
-<script type="text/javascript" src="js/echarts-all.js"></script>
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/troubleChart.js" charset="utf-8"></script>
-</html>
+<body style="height: 100%; margin: 0">
+    <div id="container" style="height: 100%;position: relative; background: rgb(64, 74, 89);" _echarts_instance_="ec_1479447805310"><div style="position: relative; overflow: hidden; width: 1600px; height: 799px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas width="1600" height="799" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 1600px; height: 799px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas width="1600" height="799" data-zr-dom-id="zr_1" style="position: absolute; left: 0px; top: 0px; width: 1600px; height: 799px; -webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+<script type="text/javascript" src="js/echarts-all-3.js"></script>
+<script type="text/javascript" src="js/china.js"></script>
+<script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var data = [
+    {name:'内蒙呼和浩特', value:50},
+    {name:'联通云基地', value:10},
+    {name:'研发部', value:98},
+    {name:'贵州贵安', value:169},
+    {name:'河北廊坊', value:300},
+];
+var geoCoordMap = {
+    '内蒙呼和浩特':[111.65,40.82],
+    '联通云基地':[116.04,39.76],
+    '研发部':[116.62,40.71],
+    '贵州贵安':[106.71,26.57],
+    '河北廊坊':[116.7,39.53],
+};
+
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+function refreshChart(dataStr){
+    data = JSON.parse(dataStr);
+    myChart.setOption({
+        backgroundColor: '#404a59',
+        title: {
+            text: '告警分布图',
+            left: 'center',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: function (params, ticket, callback) {
+                var data = params.data;
+                return '告警数 : ' + data.value[2];
+            }
+        },
+        geo: {
+            map: 'china',
+            label: {
+                emphasis: {
+                    show: false
+                }
+            },
+            roam: true,
+            itemStyle: {
+                normal: {
+                    areaColor: '#323c48',
+                    borderColor: '#111'
+                },
+                emphasis: {
+                    areaColor: '#2a333d'
+                }
+            }
+        },
+        series : [
+            {
+                name: 'trouble',
+                type: 'effectScatter',
+                coordinateSystem: 'geo',
+                data: convertData(data.sort(function (a, b) {
+                    return b.value - a.value;
+                })),
+                symbolSize: function (val) {
+                    if(val[2] > 200){
+                        return 20;
+                    }
+                    if(val[2] > 100){
+                        return 15;
+                    }
+                    if(val[2] > 50){
+                        return 10;
+                    }
+                    if(val[2] > 20){
+                        return 8;
+                    }
+                    return 5;
+                },
+                showEffectOn: 'render',
+                rippleEffect: {
+                    brushType: 'stroke'
+                },
+                hoverAnimation: true,
+                label: {
+                    normal: {
+                        formatter: '{b}',
+                        position: 'right',
+                        show: true
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#f4e925',
+                        shadowBlur: 10,
+                        shadowColor: '#333'
+                    }
+                },
+                zlevel: 1
+            }
+        ]
+    });
+}
+
+</script>
+
+</body></html>

@@ -17,4 +17,6 @@ public interface TroubleListView {
     void addData2RecyclerView(List<TroubleDetailBean> datas);
 
     void setCurrentPage(int page);
+
+    void updateTroubleSortImage(int resultSort, int resultOrderBy);
 }

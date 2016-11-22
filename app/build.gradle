@@ -8,8 +8,8 @@ android {
         applicationId "com.asiainfo.aicns"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 2016111501
-        versionName "0.3.3"
+        versionCode 2016112201
+        versionName "0.3.5"
     }
     buildTypes {
         release {

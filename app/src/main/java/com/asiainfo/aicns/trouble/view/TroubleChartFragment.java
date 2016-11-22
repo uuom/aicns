@@ -7,15 +7,18 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.asiainfo.aicns.R;
+import com.asiainfo.aicns.trouble.event.TroubleChartInitFinishedEvent;
 import com.asiainfo.aicns.trouble.event.TroubleLevelChangeEvent;
 import com.asiainfo.aicns.trouble.presenter.TroubleChartPresenter;
 import com.asiainfo.aicns.trouble.presenter.TroubleChartPresenterImpl;
@@ -37,7 +40,7 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
 
 
     private Integer troubleLevel;
-    private boolean initFinished = false;
+    private boolean isFirst = true;
 
     private TroubleChartPresenter troubleChartPresenter;
 
@@ -68,67 +71,22 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
         mWebView = (WebView) view.findViewById(R.id.webView);
         progress = (ContentLoadingProgressBar) view.findViewById(R.id.progress);
 
-        setWebView();
-        mWebView.loadUrl("file:///android_asset/troubleChart.html");
-        while (initFinished){
-            troubleChartPresenter.refreshChart(troubleLevel);
-        }
-
-        return view;
-    }
-
-
-    private void setWebView() {
-
-        mWebView.setWebViewClient(new WebViewClient() {
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new WebViewClient(){
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Override
-            public void onPageStarted(WebView webView, String url, Bitmap bitmap) {
-                super.onPageStarted(webView, url, bitmap);
-                Message msg = new Message();
-                msg.what = OBJ_START_LOAD_PAGE;
-                handler.sendMessage(msg);
-            }
-
-            @Override
-            public void onPageFinished(WebView webView, String url) {
-                super.onPageFinished(webView, url);
-
-                if (url.contains("troubleChart.html")){
-                    initFinished = true;    //加载页面完成
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if(url.contains("troubleChart.html") && isFirst){
+                    troubleChartPresenter.refreshChart(null);
+                    isFirst = false;
                 }
-
-                Message msg = new Message();
-                msg.what = OBJ_PAGE_LOAD_FINISHED;
-                handler.sendMessage(msg);
             }
         });
 
-        WebSettings settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/troubleChart.html");
+
+        return view;
     }
-
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case OBJ_START_LOAD_PAGE:
-                    mWebView.setVisibility(View.GONE);
-                    progress.setVisibility(View.VISIBLE);
-                    break;
-                case OBJ_PAGE_LOAD_FINISHED:
-                    mWebView.setVisibility(View.VISIBLE);
-                    progress.setVisibility(View.GONE);
-                    break;
-            }
-        }
-    };
-
 
     @Override
     public void hideProgress() {
@@ -136,17 +94,9 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
         progress.setVisibility(View.GONE);
     }
 
-    int width;
-    int height;
-
     @Override
     public void setData2WebView(String jsonData) {
-
-        WindowManager wm = this.getActivity().getWindowManager();
-        width = wm.getDefaultDisplay().getWidth();
-        height = wm.getDefaultDisplay().getHeight();
-
-        mWebView.loadUrl("javascript:createChart(" + width*0.38 + ",'"+ jsonData +"');");
+        EventBus.getDefault().post(new TroubleChartInitFinishedEvent(jsonData));
     }
 
     @Override
@@ -166,5 +116,10 @@ public class TroubleChartFragment extends Fragment implements TroubleChartView{
     public void onTroubleLevelChangeEvent(TroubleLevelChangeEvent event){
         this.troubleLevel = event.troubleLevel;
         troubleChartPresenter.refreshChart(event.troubleLevel);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTroubleChartInitFinishedEvent(TroubleChartInitFinishedEvent event){
+        mWebView.loadUrl("javascript:refreshChart('"+ event.dataStr +"');");
+        hideProgress();
     }
 }

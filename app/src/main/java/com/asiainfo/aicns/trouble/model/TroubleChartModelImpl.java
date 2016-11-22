@@ -24,8 +24,12 @@ public class TroubleChartModelImpl implements TroubleChartModel {
         return Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(final Subscriber<? super String> subscriber) {
-
-                String url = Api.REQUEST_BASE_URL + Api.GET_TROUBLE_CHART_DATA_URL + "&troubleLevel="+troubleLevel;
+                String url = "";
+                if (troubleLevel == null){
+                    url = Api.REQUEST_BASE_URL + Api.GET_TROUBLE_CHART_DATA_URL;
+                }else{
+                    url = Api.REQUEST_BASE_URL + Api.GET_TROUBLE_CHART_DATA_URL + "&troubleLevel="+troubleLevel;
+                }
                 App.getOkHttpUtil().get(url, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

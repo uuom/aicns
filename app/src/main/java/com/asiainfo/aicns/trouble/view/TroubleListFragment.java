@@ -2,6 +2,7 @@ package com.asiainfo.aicns.trouble.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.asiainfo.aicns.R;
 import com.asiainfo.aicns.bean.TroubleDetailBean;
+import com.asiainfo.aicns.common.constant.Constant;
 import com.asiainfo.aicns.common.view.AIRecyclerView;
 import com.asiainfo.aicns.trouble.event.TroubleLevelChangeEvent;
 import com.asiainfo.aicns.trouble.presenter.TroubleListPresenter;
@@ -31,8 +34,9 @@ import java.util.List;
 
 public class TroubleListFragment extends Fragment implements TroubleListView, View.OnClickListener {
 
-    private static final String TROUBLE_TYPE_KEY = "com.asiainfo.aicns.trouble.view.TroubleListFragment.trouble_type_key";
     private Integer troubleLevel;
+    private Integer sort = Constant.SORT_TROUBLE_TIME; //默认时间正序
+    private Integer orderBy = Constant.ORDER_BY_DESC;
 
     private TroubleListPresenter troubleListPresenter;
     private TroubleListAdapter mTroubleListAdapter;
@@ -40,6 +44,8 @@ public class TroubleListFragment extends Fragment implements TroubleListView, Vi
     AIRecyclerView mAIRecyclerView;
     LinearLayout troubleLevelSort;
     LinearLayout troubleTimeSort;
+    ImageView troubleLevelSort_icon;
+    ImageView troubleTimeSort_icon;
 
     public static TroubleListFragment newInstance(Integer troubleLevel){
         TroubleListFragment troubleChartFragment = new TroubleListFragment();
@@ -70,6 +76,8 @@ public class TroubleListFragment extends Fragment implements TroubleListView, Vi
         mAIRecyclerView = (AIRecyclerView) view.findViewById(R.id.troubleList);
         troubleLevelSort = (LinearLayout) view.findViewById(R.id.troubleLevelSort);
         troubleTimeSort = (LinearLayout) view.findViewById(R.id.troubleTimeSort);
+        troubleLevelSort_icon = (ImageView) view.findViewById(R.id.troubleLevelSort_icon);
+        troubleTimeSort_icon = (ImageView) view.findViewById(R.id.troubleTimeSort_icon);
 
         mTroubleListAdapter = new TroubleListAdapter(this.getActivity());
         mTroubleListAdapter.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +140,32 @@ public class TroubleListFragment extends Fragment implements TroubleListView, Vi
     }
 
     @Override
+    public void updateTroubleSortImage(final int resultSort, final int resultOrderBy) {
+        sort = resultSort;
+        orderBy = resultOrderBy;
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (resultSort == Constant.SORT_TROUBLE_LEVEL){
+                    troubleTimeSort_icon.setImageResource(R.drawable.ic_sort_normal);
+                    if (resultOrderBy == Constant.ORDER_BY_DESC){
+                        troubleLevelSort_icon.setImageResource(R.drawable.ic_sort_desc);
+                    }else{
+                        troubleLevelSort_icon.setImageResource(R.drawable.ic_sort_asc);
+                    }
+                }else{
+                    troubleLevelSort_icon.setImageResource(R.drawable.ic_sort_normal);
+                    if (resultOrderBy == Constant.ORDER_BY_DESC){
+                        troubleTimeSort_icon.setImageResource(R.drawable.ic_sort_desc);
+                    }else{
+                        troubleTimeSort_icon.setImageResource(R.drawable.ic_sort_asc);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
@@ -145,13 +179,6 @@ public class TroubleListFragment extends Fragment implements TroubleListView, Vi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.troubleLevelSort:
-                //TODO 按故障级别排序
-                break;
-            case R.id.troubleTimeSort:
-                //TODO 按故障发生时间排序
-                break;
-        }
+        troubleListPresenter.onTroubleSortClick(view,sort,orderBy);
     }
 }

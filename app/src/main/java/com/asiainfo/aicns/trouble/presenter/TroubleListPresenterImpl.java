@@ -1,6 +1,11 @@
 package com.asiainfo.aicns.trouble.presenter;
 
+import android.util.Log;
+import android.view.View;
+
+import com.asiainfo.aicns.R;
 import com.asiainfo.aicns.bean.TroubleDetailBean;
+import com.asiainfo.aicns.common.constant.Constant;
 import com.asiainfo.aicns.trouble.model.TroubleListModel;
 import com.asiainfo.aicns.trouble.model.TroubleListModelImpl;
 import com.asiainfo.aicns.trouble.view.TroubleListView;
@@ -70,5 +75,30 @@ public class TroubleListPresenterImpl implements TroubleListPresenter {
                         troubleListView.addData2RecyclerView(datas);
                     }
                 });
+    }
+
+    @Override
+    public void onTroubleSortClick(View view, Integer sort, Integer orderBy) {
+        int resultSort = sort;
+        int resultOrderBy = orderBy;
+        switch (view.getId()){
+            case R.id.troubleLevelSort:
+                if (sort == Constant.SORT_TROUBLE_LEVEL){
+                    resultOrderBy = (orderBy==Constant.ORDER_BY_DESC ? Constant.ORDER_BY_ASC : Constant.ORDER_BY_DESC);
+                }else{
+                    resultSort = Constant.SORT_TROUBLE_LEVEL;
+                    resultOrderBy = Constant.ORDER_BY_DESC;
+                }
+                break;
+            case R.id.troubleTimeSort:
+                if (sort == Constant.SORT_TROUBLE_TIME){
+                    resultOrderBy = (orderBy==Constant.ORDER_BY_DESC ? Constant.ORDER_BY_ASC : Constant.ORDER_BY_DESC);
+                }else{
+                    resultSort = Constant.SORT_TROUBLE_TIME;
+                    resultOrderBy = Constant.ORDER_BY_DESC;
+                }
+                break;
+        }
+        troubleListView.updateTroubleSortImage(resultSort, resultOrderBy);
     }
 }

@@ -30,6 +30,7 @@
                 android:textSize="8pt"/>
 
             <ImageView
+                android:id="@+id/troubleLevelSort_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -51,6 +52,7 @@
                 android:textSize="8pt"/>
 
             <ImageView
+                android:id="@+id/troubleTimeSort_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
